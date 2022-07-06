@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock-Paper-Scissors</title>
+</head>
+<body>
+    <h1>Rock Paper Scissors!</h1>
+    <button class="rock">ROCK</button>
+    <button class="paper">PAPER</button>
+    <button class="scissors">SCISSORS</button>
+    <div class="results"></div>
+    <script>
+        const rock = document.querySelector(".rock");
+        const paper = document.querySelector(".paper");
+        const scissors = document.querySelector(".scissors");
+        const results = document.querySelector(".results");
+
+        const computerChoice = document.createElement("p");
+        const playerChoice = document.createElement("p");
+        const roundResults = document.createElement("p");
+        const score = document.createElement("p");
+        const gameOver = document.createElement("p");
+
+        rock.addEventListener('click',function(e){game("rock")});
+        paper.addEventListener('click',function(e){game("paper")});
+        scissors.addEventListener('click',function(e){game("scissors")});
+
+        let playerScore = 0
+        let computerScore = 0
+
+        function computerAi() {
+            let choice = Math.floor(Math.random() * 4)
+            if (choice === 0) {
+                return "rock";
+            } else if (choice === 1) {
+                return "paper";
+            } else {
+                return "scissors";
+            }
+        }
+    
+
+        function playRound(playerSelection) {
+        const computerSelection = computerAi();
+
+        computerChoice.textContent = "Computer chose: " + computerSelection;
+        playerChoice.textContent = "You chose: " + playerSelection;
+
+        if (computerSelection == "scissors" && playerSelection == "paper") {
+            roundResults.textContent = "You lose! Scissors beats Paper";
+            computerScore++;
+            }   
+            
+            else if (computerSelection == "paper" && playerSelection == "rock") {
+                roundResults.textContent = "You lose! Paper beats Rock";
+                computerScore++;
+            }
+            
+            else if (computerSelection == "rock" && playerSelection == "scissors") {
+                roundResults.textContent = "You lose! Rock beats Scissors";
+                computerScore++;
+            }
+        
+            else if (computerSelection == "scissors" && playerSelection == "rock") {
+                roundResults.textContent = "You win! Rock beats Scissors";
+                playerScore++;
+            }
+
+            else if (computerSelection == "paper" && playerSelection == "scissors") {
+                roundResults.textContent = "You win! Scissors beats Paper";
+                playerScore++;
+            }
+
+            else if (computerSelection == "rock" && playerSelection == "paper") {
+                roundResults.textContent = "You win! Paper beats Rock";
+                playerScore++;
+            }
+
+            else {
+                roundResults.textContent = "You tied!";
+            }
+        
+            score.textContent = ("Player score is: " + playerScore + " | " + "Computer score is: " + computerScore);
+        
+            results.appendChild(computerChoice);
+            results.appendChild(playerChoice);
+            results.appendChild(roundResults);
+            results.appendChild(score);
+        }
+
+        function game(playerSelection) {
+            if ((computerScore < 3) && (playerScore < 3)) {
+                playRound(playerSelection); 
+                }   
+                
+                else if (playerScore === 3) {
+                    gameOver.textContent = "You win! Yay! A plus! Get back to work =.=";
+                } 
+                
+                else if (computerScore === 3){
+                    gameOver.textContent = "You lose :("
+                }
+            
+                results.appendChild(gameOver);
+        }
+    </script>
+</body>
+</html>
